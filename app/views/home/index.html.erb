@@ -1,0 +1,24 @@
+<div>
+<div id="menu">
+      <span id="menu-navi">
+      <button data-action="hello#moveToDate()"> MoveCalendar </button>
+      <button data-action="hello#clearCalendar"> Clear calendar </button>
+      <button data-action="hello#addSchedule"> Add schedule </button>
+        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+          <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+          <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+        </button>
+      </span>
+      <span id="renderRange" class="render-range"></span>
+    </div>
+
+    <div>
+    <%= tag.div nil, id: "calendar", data: {schedules: @schedules.to_json} %>
+
+    </div>
+    
+
+</div>

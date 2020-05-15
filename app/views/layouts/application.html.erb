@@ -4,12 +4,32 @@
     <title>Calendar</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0, user-scalable=no">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+
+<!-- If you use the default popups, use this. -->
+
+
+<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+
+<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+<script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+
+<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
+
+<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+
+<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
   </head>
 
   <body>
+    
+  <!-- <div id="calendar" style="height: 800px;"></div> -->
     <%= yield %>
   </body>
 </html>
