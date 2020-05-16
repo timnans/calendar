@@ -5,12 +5,13 @@
 
 require("@rails/ujs").start()
 require("turbolinks").start()
-require("@rails/activestorage").start()
+// require("@rails/activestorage").start()
 require("channels")
 require("tui-calendar")
-// var Calendar = require('tui-calendar'); /* CommonJS */
+import Rails from "@rails/ujs";
+var Calendar = require('tui-calendar'); /* CommonJS */
 // require("tui-calendar/dist/tui-calendar.css");
-import Calendar from 'tui-calendar'; /* ES6 */
+// import Calendar from 'tui-calendar'; /* ES6 */
 import 'tui-time-picker/dist/tui-time-picker.css';
 // If you use the default popups, use this.
 // require("tui-date-picker/dist/tui-date-picker.css");
@@ -23,6 +24,13 @@ import 'tui-time-picker/dist/tui-time-picker.css';
 // const imagePath = (name) => images(name, true)
 
 import "controllers"
+var calendar;
+var mydata = {
+  param: {
+   field1: "value1",
+   field2: "value2",
+ }}
+ 
 document.addEventListener('turbolinks:load',function() {
     calendar = new Calendar(document.getElementById('calendar'), {
         defaultView: 'month',
@@ -67,10 +75,7 @@ document.addEventListener('turbolinks:load',function() {
 
       var schedules = JSON.parse(document.querySelector("#calendar").dataset.schedules);
   window.schedules = schedules;
-  console.log(schedules);
-
 schedules.forEach(schedule => {
-  console.log(schedule.id)
   calendar.createSchedules([
     {
       id: schedule.id,
@@ -78,7 +83,7 @@ schedules.forEach(schedule => {
       title: schedule.title,
       category: 'time',
       dueDateClass: schedule.dueDateClass,
-      location: "THis is it ",
+      location: schedule.location,
       start: schedule.start,
       end: schedule.end
     }
@@ -98,7 +103,7 @@ calendar.on('beforeUpdateSchedule', function(event) {
 
   calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
 });
-
+// create
 calendar.on('beforeCreateSchedule', function(event) {
     //   console.log(calendar)
       var title = event.title
@@ -126,8 +131,21 @@ calendar.on('beforeCreateSchedule', function(event) {
           // open writing detail schedule popup
           // schedule = {...};
       }
-    
+
       calendar.createSchedules([schedule]);
+    console.log(schedule.start._date)
+      let formData = new FormData()
+      formData.append('title', schedule.title);
+      formData.append('category', schedule.category);
+      formData.append('start', schedule.start._date);
+      formData.append('end', schedule.end._date);
+
+      Rails.ajax({
+        type: "POST",
+        url: '/schedules',
+        data: formData
+      })
+     
     });
 });
 

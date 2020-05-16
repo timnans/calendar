@@ -28,7 +28,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to @schedule, notice: 'Schedule was successfully created.' }
+        # format.html { redirect_to @schedule, notice: 'Schedule was successfully created.' }
         format.json { render :show, status: :created, location: @schedule }
       else
         format.html { render :new }
@@ -69,6 +69,6 @@ class SchedulesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def schedule_params
-      params.require(:schedule).permit(:calendarId, :title, :category, :dueDateClass, :start, :end)
+      params.permit(:calendarId, :title, :category, :dueDateClass, :start, :end)
     end
 end
