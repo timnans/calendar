@@ -25,12 +25,7 @@ import 'tui-time-picker/dist/tui-time-picker.css';
 
 import "controllers"
 var calendar;
-var mydata = {
-  param: {
-   field1: "value1",
-   field2: "value2",
- }}
- 
+
 document.addEventListener('turbolinks:load',function() {
     calendar = new Calendar(document.getElementById('calendar'), {
         defaultView: 'month',
@@ -95,13 +90,45 @@ schedules.forEach(schedule => {
     var schedule = event.schedule;
     alert('The schedule is removed.', schedule);
     calendar.deleteSchedule(schedule.id, schedule.calendarId)
+
+    Rails.ajax({
+      type: "DELETE",
+      url: '/schedules/'+ schedule.id,
+      // data: formData
+    })
 });
 
 calendar.on('beforeUpdateSchedule', function(event) {
   var schedule = event.schedule;
   var changes = event.changes;
+  var formUpdate = new FormData()
+  
+  console.log(schedule)
 
+
+//  console.log(changes)
+ if (changes.end) {
+   formUpdate.append("end", changes.end._date)
+   
+ }
+ if (changes.start) {
+  formUpdate.append("start", changes.start._date)
+  
+}
+if (changes.title) {
+  formUpdate.append("title", changes.title)  
+}
+if (changes.category) {
+  formUpdate.append("category", changes.category)  
+}
   calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
+
+  Rails.ajax({
+    type: "PATCH",
+    url: '/schedules/'+ schedule.id,
+    data: formUpdate
+  })
+
 });
 // create
 calendar.on('beforeCreateSchedule', function(event) {
@@ -110,6 +137,8 @@ calendar.on('beforeCreateSchedule', function(event) {
       var startTime = event.start;
       var endTime = event.end;
       var isAllDay = event.isAllDay;
+
+     
     //   var guide = event.guide;
     //   console.log(guide)
       var triggerEventName = event.triggerEventName;
@@ -119,7 +148,7 @@ calendar.on('beforeCreateSchedule', function(event) {
         title: title,
         category: 'time',
         // dueDateClass: schedule.dueDateClass,
-        location: "THis is it ",
+        location: location,
         start: startTime,
         end: endTime
       }
