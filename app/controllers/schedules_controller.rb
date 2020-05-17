@@ -56,7 +56,7 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule.destroy
     respond_to do |format|
-      format.html { redirect_to schedules_url, notice: 'Schedule was successfully destroyed.' }
+      # format.html { redirect_to schedules_url, notice: 'Schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

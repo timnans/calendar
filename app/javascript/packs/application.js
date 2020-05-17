@@ -29,11 +29,19 @@ var calendar;
 document.addEventListener('turbolinks:load',function() {
     calendar = new Calendar(document.getElementById('calendar'), {
         defaultView: 'month',
-        taskView: true,    // Can be also ['milestone', 'task']
+        milestone: true,    // Can be also ['milestone', 'task']
         scheduleView: true,  // Can be also ['allday', 'time']
         useCreationPopup: true,
         useDetailPopup: true,
         template: {
+
+          popupDetailRepeat: function(schedule) {
+            return 'Repeat : ' + schedule.recurrenceRule;
+          },
+          
+          popupStateFree: function() {
+            return 'Free';
+          },
             milestone: function(schedule) {
                 return '<span style="color:red;"><i class="fa fa-flag"></i> ' + schedule.title + '</span>';
             },
@@ -144,7 +152,7 @@ calendar.on('beforeCreateSchedule', function(event) {
       var triggerEventName = event.triggerEventName;
       var schedule =  {
         id: 1,
-        calendarId: '1',
+        calendarId: '3',
         title: title,
         category: 'time',
         // dueDateClass: schedule.dueDateClass,
